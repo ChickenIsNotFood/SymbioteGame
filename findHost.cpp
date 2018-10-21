@@ -4,10 +4,8 @@
 
 using namespace std;
 
-const int chieuDai = 15;
-const int chieuRong = 30;
-
-int i, j;
+ char frame[15][30] ;
+ int i, j;
 
 void setup()
 {
@@ -17,31 +15,35 @@ void setup()
 
 void draw()
 {
+
 	//khung_tren
-	for (i = 0; i < chieuRong; i++)
+	for (i = 0; i < 30; i++)
 	{
-		cout << "#";
+		frame[0][i] = '#';
 	}
 	cout << endl;
 	//khung_trai
-	for (i = 0; i < chieuDai; i++)
+	for (i = 0; i < 15; i++)
 	{
-		cout << '#' << endl;
+		frame[i][0] = '#';
 	}
 	//khung_phai
-	for (i = 0; i < chieuRong; i++)
+	for (i = 1; i < 14; i++)
 	{
-		for (j = 0; j < chieuDai; j++)
+		for (j = 1; j < 30; j++)
 		{
-			cout << '#' << endl;
+		   frame[i][j] =' ';
 		}
 	}
 	//khung_duoi
-	for (i = 0; i < chieuRong; i++)
-	{
-		cout << "#";
+	for (i =0; i < 30; i++){
+	  frame[15][i] = '#';
 	}
-	cout << endl;
+	// print out the frame
+	for (i = 0; i<15; i++)
+             for (j = 0; j< 30; j++){
+	     cout << frame[i][j];
+	    }
 
 }
 
