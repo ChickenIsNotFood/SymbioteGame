@@ -1,55 +1,92 @@
 //symbiote
 #include<iostream>
-#include<iomanip>
+#include <time.h>
+#include <Windows.h>
+#include "string"
+#include "conio.h"
+
+#define max 100
 
 using namespace std;
 
- char frame[15][30] ;
- int i, j;
+const int chieuDai = 15;
+const int chieuRong = 30;
+
+int i, j, score;
+
+bool isGameOver;
+
+enum keyboard { stop = 0, up, down, left, right };
+
+keyboard dir;
+
+struct point
+{
+	int x;
+	int y;
+};
+
+point symbiotes[max];
+point fruit;
 
 void setup()
 {
-	char fruit = '*';
-	char headSymbiote = '@';
+	score = 0;
+	isGameOver = false;
+	dir = stop;
 }
 
 void draw()
 {
-
+	system("cls");
 	//khung_tren
-	for (i = 0; i < 30; i++)
+	for (i = 0; i < chieuRong; i++)
 	{
-		frame[0][i] = '#';
+		cout << "#";
 	}
+	//khung_trai_phai
 	cout << endl;
-	//khung_trai
-	for (i = 0; i < 15; i++)
+	for (int i = 2; i < chieuDai; i++)
 	{
-		frame[i][0] = '#';
-	}
-	//khung_phai
-	for (i = 1; i < 14; i++)
-	{
-		for (j = 1; j < 30; j++)
+		cout << "#";
+		for (int j = 1; j < chieuRong - 1; j++)
 		{
-		   frame[i][j] =' ';
+			cout << " ";
 		}
+		cout << "#" << endl;
 	}
 	//khung_duoi
-	for (i =0; i < 30; i++){
-	  frame[15][i] = '#';
+	for (i = 0; i < chieuRong; i++)
+	{
+		cout << "#";
 	}
-	// print out the frame
-	for (i = 0; i<15; i++)
-             for (j = 0; j< 30; j++){
-	     cout << frame[i][j];
-	    }
+	cout << endl;
 
 }
 
 void input()
 {
-
+	/*if (_kbhit())
+	{
+		switch (_getch())
+		{
+		case'w':
+			dir = up;
+			break;
+		case'a':
+			dir = left;
+			break;
+		case'd':
+			dir = right;
+			break;
+		case's':
+			dir = down;
+			break;
+		default:
+			dir = stop;
+			break;
+		}
+	}*/
 }
 
 void logic()
@@ -61,6 +98,7 @@ void logic()
 int main()
 {
 	draw();
+
 	system("pause");
 	return 0;
 }
