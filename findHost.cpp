@@ -70,7 +70,12 @@ void genFoodY()
 
 void draw()
 {
-	
+	int x =0;
+     if (x ==0){
+         genFoodX();
+	 genFoodY();
+	  x=1;
+	}
 	system("cls");
 	for (i = 0; i <= coordinateX; i++) cout << "#";
 	cout << endl;
