@@ -18,11 +18,6 @@ int i, j;
 int pointerX = coordinateX / 2;
 int pointerY = coordinateY / 2;
 
-enum moving { UP, DOWN, LEFT, RIGHT, ENDGAME,STOP=0 };
-
-moving pointer;
-
-
 void draw()
 {
 	system("cls");
@@ -43,70 +38,29 @@ void draw()
 
 	for (i = 0; i <= coordinateX; i++) cout << "#";
 	cout << endl;
-	cout << "Score: " << score<<endl;
-
+	cout << "Score: " << score << endl;
 }
 
 void input()
 {
-		int check = 0;
-		switch (check = getch())
-		{
-		case PRESS_LEFT:
-			pointer = LEFT;
-			break;
-		case PRESS_RIGHT:
-			pointer = RIGHT;
-			break;
-		case PRESS_UP:
-			pointer = UP;
-			break;
-		case PRESS_DOWN:
-			pointer = DOWN;
-			break;
-		case'X':
-		case'x':
-			pointer = ENDGAME;
-			break;
-		}
-}
-
-void logic()
-{
-	switch (pointer)
+	int check = 0;
+	switch (check = _getch())
 	{
-	case UP:
-		pointerY--;
-		break;
-	case DOWN:
-		pointerY++;
-		break;
-	case LEFT:
+	case PRESS_LEFT:
 		pointerX--;
 		break;
-	case RIGHT:
+	case PRESS_RIGHT:
 		pointerX++;
 		break;
-	case ENDGAME:
-		isGameOver = true;
+	case PRESS_UP:
+		pointerY--;
 		break;
-	default:
+	case PRESS_DOWN:
+		pointerY++;
 		break;
-	}
-
-	if (pointerX == coordinateX)
-	{
-		if (pointerY == coordinateY || pointerY == 0)
-		{
-			isGameOver = true;
-		}
-	}
-	else if (pointerY == coordinateY)
-	{
-		if (pointerX == coordinateX || pointerX == 0)
-			isGameOver = true;
 	}
 }
+
 
 int main()
 {
@@ -115,7 +69,6 @@ int main()
 	{
 		draw();
 		input();
-		logic();
 	}
 	system("pause");
 }
