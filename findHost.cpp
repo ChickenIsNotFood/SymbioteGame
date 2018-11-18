@@ -5,8 +5,8 @@
 #define PRESS_DOWN 80
 #define PRESS_LEFT 75
 #define PRESS_RIGHT 77
-//#define PRESS_X 
-using namespace std; //#define KEY_UP 72
+
+using namespace std; 
 
 const int coordinateX = 30;
 const int coordinateY = 18;
@@ -20,20 +20,10 @@ int i, j;
 int pointerX = coordinateX / 2;
 int pointerY = coordinateY / 2;
 
+int foodX; 
+int foodY;
+
 bool LEFT = false, RIGHT = false, UP = false, DOWN = false;
-
-int foodx;
-int foody;
-
-int GenFoodx(){
-	foodx = 
-   return foodx;
-}
-
-int GenFoody(){
-	foody = 
- return foody;
-}
 
 void input()
 {
@@ -67,9 +57,20 @@ void input()
 		UP = false;
 	}
 }
+ 
+void genFoodX()
+{
+	foodX = rand() % coordinateX;
+}
+
+void genFoodY()
+{
+	foodY = rand() % coordinateY;
+}
 
 void draw()
 {
+	
 	system("cls");
 	for (i = 0; i <= coordinateX; i++) cout << "#";
 	cout << endl;
@@ -80,6 +81,7 @@ void draw()
 		{
 			if (j == 0) cout << "#";
 			else if (j == pointerX && i == pointerY) cout << "@";
+			else if (j == foodX && i == foodY) cout << "*";
 			else if (j == coordinateX) cout << "#";
 			else cout << " ";
 		}
@@ -102,7 +104,7 @@ void draw()
 			return;
 		}
 	}
-	else if (pointerY == coordinateY|| pointerY ==-2 )
+	else if (pointerY == coordinateY|| pointerY == -2)
 	{
 		if (pointerX <= coordinateX || pointerX == -2)
 		{
@@ -114,16 +116,12 @@ void draw()
 
 int main()
 {
-
 	isGameOver = false;
 	while (!isGameOver)
 	{
-
 		draw();
 		Sleep(20);
 		input();
-		
-
 	}
 	system("pause");
 }
