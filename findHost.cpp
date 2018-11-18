@@ -4,7 +4,7 @@
 #define PRESS_DOWN 80
 #define PRESS_LEFT 75
 #define PRESS_RIGHT 77
-using namespace std;#define KEY_UP 72
+using namespace std;
 
 const int coordinateX = 30;
 const int coordinateY = 18;
