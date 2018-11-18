@@ -1,8 +1,8 @@
 #include<iostream>
 #include<conio.h>
 #include<Windows.h>
-#include "fstream.h"
-
+#include <fstream.h>
+#include <time.h>
 using namespace std;
 
 const int coordinateX = 30;
@@ -59,11 +59,13 @@ void input()
 
 void genFoodX()
 {
+	 srand (time(NULL));	
 	foodX = rand() % coordinateX;
 }
 
 void genFoodY()
 {
+	srand (time(NULL));	
 	foodY = rand() % coordinateY;
 }
 
