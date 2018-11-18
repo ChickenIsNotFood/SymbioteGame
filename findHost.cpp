@@ -1,7 +1,10 @@
 #include<iostream>
 #include<conio.h>
-
-using namespace std;
+#define PRESS_UP 72
+#define PRESS_DOWN 80
+#define PRESS_LEFT 75
+#define PRESS_RIGHT 77
+using namespace std;#define KEY_UP 72
 
 const int coordinateX = 30;
 const int coordinateY = 18;
@@ -46,24 +49,19 @@ void draw()
 
 void input()
 {
-	if (_kbhit())
-	{
-		switch (pointer)
+		int check = 0;
+		switch (check = getch())
 		{
-		case'A':
-		case'a':
+		case PRESS_LEFT:
 			pointer = LEFT;
 			break;
-		case'D':
-		case'd':
+		case PRESS_RIGHT:
 			pointer = RIGHT;
 			break;
-		case'W':
-		case'w':
+		case PRESS_UP:
 			pointer = UP;
 			break;
-		case'S':
-		case's':
+		case PRESS_DOWN:
 			pointer = DOWN;
 			break;
 		case'X':
@@ -71,7 +69,6 @@ void input()
 			pointer = ENDGAME;
 			break;
 		}
-	}
 }
 
 void logic()
