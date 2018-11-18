@@ -1,11 +1,12 @@
 #include<iostream>
 #include<conio.h>
+#include<Windows.h>
 #define PRESS_UP 72
 #define PRESS_DOWN 80
 #define PRESS_LEFT 75
 #define PRESS_RIGHT 77
-using namespace std;
 
+using namespace std; 
 const int coordinateX = 30;
 const int coordinateY = 18;
 
@@ -17,6 +18,41 @@ int i, j;
 
 int pointerX = coordinateX / 2;
 int pointerY = coordinateY / 2;
+
+bool LEFT = true, RIGHT = false, UP = false, DOWN = false;
+
+void input()
+{
+	if (GetAsyncKeyState(VK_LEFT))
+	{
+		LEFT = true;
+		RIGHT = false;
+		UP = false;
+		DOWN = false;
+	}
+	else if (GetAsyncKeyState(VK_RIGHT))
+	{
+		RIGHT = true;
+		LEFT = false;
+		UP = false;
+		DOWN = false;
+	}
+	else if (GetAsyncKeyState(VK_UP))
+	{
+		UP = true;
+		RIGHT = false;
+		LEFT = false;
+		DOWN = false;
+	}
+
+	else if (GetAsyncKeyState(VK_DOWN))
+	{
+		DOWN = true;
+		RIGHT = false;
+		LEFT = false;
+		UP = false;
+	}
+}
 
 void draw()
 {
@@ -39,36 +75,41 @@ void draw()
 	for (i = 0; i <= coordinateX; i++) cout << "#";
 	cout << endl;
 	cout << "Score: " << score << endl;
-}
+	if (LEFT) pointerX--;
+	else if (RIGHT) pointerX++;
+	else if (UP) pointerY--;
+	else if (DOWN) pointerY++;
 
-void input()
-{
-	int check = 0;
-	switch (check = _getch())
-	{
-	case PRESS_LEFT:
-		pointerX--;
-		break;
-	case PRESS_RIGHT:
-		pointerX++;
-		break;
-	case PRESS_UP:
-		pointerY--;
-		break;
-	case PRESS_DOWN:
-		pointerY++;
-		break;
+	if (pointerX == coordinateX) {
+		if (pointerY == coordinateY || pointerY == 0) {
+			isGameOver = true;
+		}
+	}
+	else if (pointerY == coordinateY) {
+		if (pointerX == coordinateX || pointerX == 0)
+			isGameOver = true;
 	}
 }
 
+void logic()
+{
+
+
+
+}
 
 int main()
 {
 	isGameOver = false;
 	while (!isGameOver)
 	{
+
 		draw();
+		Sleep(20);
 		input();
+		
+
 	}
 	system("pause");
 }
+
