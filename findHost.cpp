@@ -1,172 +1,124 @@
 #include<iostream>
 #include<conio.h>
 
-#define max 100
-
 using namespace std;
 
-const int truc_x = 25;
-const int truc_y = 25;
+const int coordinateX = 30;
+const int coordinateY = 18;
 
-int i, j, diem_so;
+int score;
 
-bool thua_cmnr;
+bool isGameOver;
 
-enum di_chuyen
+int i, j;
+
+int pointerX = coordinateX / 2;
+int pointerY = coordinateY / 2;
+
+enum moving { UP, DOWN, LEFT, RIGHT, ENDGAME,STOP=0 };
+
+moving pointer;
+
+
+void draw()
 {
-	UP, RIGHT, LEFT, DOWN, STOP
-};
-
-struct toa_do
-{
-	int x;
-	int y;
-};
-
-struct con_ran
-{
-	int duoi_ran;
-	toa_do toa_do;
-	di_chuyen _di_chuyen;
-};
-
-struct thuc_an
-{
-	toa_do toa_do;
-};
-
-con_ran ran;
-con_ran duoi[max];
-thuc_an do_an;
-
-void ve_cai_khung()
-{
-	//khung_tren
-	for (i = 0; i < truc_x; i++)
-	{
-		cout << "#";
-	}
+	system("cls");
+	for (i = 0; i <= coordinateX; i++) cout << "#";
 	cout << endl;
-	//khung_trai_phai
-	for (int i = 2; i < truc_x; i++)
+
+	for (i = 0; i < coordinateY; i++)
 	{
-		cout << "#";
-		for (int j = 1; j < truc_y - 1; j++)
+		for (j = 0; j <= coordinateX; j++)
 		{
-			cout << " ";
+			if (j == 0) cout << "#";
+			else if (j == pointerX && i == pointerY) cout << "@";
+			else if (j == coordinateX) cout << "#";
+			else cout << " ";
 		}
-		cout << "#" << endl;
+		cout << endl;
 	}
-	//khung_duoi
-	for (i = 0; i < truc_x; i++)
-	{
-		cout << "#";
-	}
+
+	for (i = 0; i <= coordinateX; i++) cout << "#";
 	cout << endl;
+	cout << "Score: " << score<<endl;
+
 }
 
-void ran_ngo_nguay()
+void input()
 {
 	if (_kbhit())
 	{
-		switch (_getch())
+		switch (pointer)
 		{
-		case'w':
-			ran._di_chuyen = UP;
-			break;
-		case's':
-			ran._di_chuyen = DOWN;
-			break;
+		case'A':
 		case'a':
-			ran._di_chuyen = LEFT;
+			pointer = LEFT;
 			break;
+		case'D':
 		case'd':
-			ran._di_chuyen = RIGHT;
+			pointer = RIGHT;
 			break;
+		case'W':
+		case'w':
+			pointer = UP;
+			break;
+		case'S':
+		case's':
+			pointer = DOWN;
+			break;
+		case'X':
 		case'x':
-			thua_cmnr = true;
-		default:
+			pointer = ENDGAME;
 			break;
 		}
 	}
 }
 
-void ia_ra_ran()
+void logic()
 {
-	ran.toa_do.x = truc_x / 2;
-	ran.toa_do.y = truc_y / 2;
-	for (i = 0; i < truc_x; i++)
-	{
-		for (j = 0; j < truc_y; j++)
-		{
-			if (ran.toa_do.x == i && ran.toa_do.y == j)
-			{
-				cout << "@";
-			}
-		}
-	}
-}
-
-void ia_ra_thuc_an()
-{
-	do_an.toa_do.x = rand() % truc_x-1;
-	do_an.toa_do.y = rand() % truc_y - 1;
-	
-	for (i = 0; i < truc_x; i++)
-	{
-		for (j = 0; j < truc_y; j++)
-		{
-			if (ran.toa_do.x == i && ran.toa_do.y == j)
-			{
-				cout << "*";
-			}
-		}
-	}
-}
-
-void brain_cua_ran()
-{
-	switch (ran._di_chuyen)
+	switch (pointer)
 	{
 	case UP:
-		ran.toa_do.y--;
+		pointerY--;
 		break;
 	case DOWN:
-		ran.toa_do.y++;
+		pointerY++;
 		break;
 	case LEFT:
-		ran.toa_do.x--;
+		pointerX--;
 		break;
 	case RIGHT:
-		ran.toa_do.x++;
+		pointerX++;
+		break;
+	case ENDGAME:
+		isGameOver = true;
 		break;
 	default:
 		break;
 	}
-	if (ran.toa_do.x == do_an.toa_do.x && ran.toa_do.y == do_an.toa_do.y)
-	{
-		ran.duoi_ran++;
-	}
 
-	for (i = 0; i < ran.duoi_ran; i++)
+	if (pointerX == coordinateX)
 	{
-		ran.toa_do.x = duoi[i].toa_do.x;
-		ran.toa_do.y = duoi[i].toa_do.y;
+		if (pointerY == coordinateY || pointerY == 0)
+		{
+			isGameOver = true;
+		}
+	}
+	else if (pointerY == coordinateY)
+	{
+		if (pointerX == coordinateX || pointerX == 0)
+			isGameOver = true;
 	}
 }
 
 int main()
 {
-	thua_cmnr = false;
-	ve_cai_khung();
-	while (!thua_cmnr)
+	isGameOver = false;
+	while (!isGameOver)
 	{
-		ia_ra_ran();
-		ran_ngo_nguay();
-		ia_ra_thuc_an();
-		brain_cua_ran();
+		draw();
+		input();
+		logic();
 	}
-
-	_getch();
-	return 0;
+	system("pause");
 }
