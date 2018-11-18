@@ -77,6 +77,25 @@ void isEaten()
 	}
 }
 
+void isDead(){
+if (pointerX == coordinateX || pointerX == -2)
+	{
+		if (pointerY <= coordinateY || pointerY == -2)
+		{
+			isGameOver = true;
+			
+		}
+	}
+	else if (pointerY == coordinateY || pointerY == -2)
+	{
+		if (pointerX <= coordinateX || pointerX == -2)
+		{
+			isGameOver = true;
+		
+		}
+	}
+}
+
 void draw()
 {
 	if (x == 0) {
@@ -111,24 +130,9 @@ void draw()
 	else if (UP) pointerY--;
 	else if (DOWN) pointerY++;
     
-	if (pointerX == coordinateX || pointerX == -2)
-	{
-		if (pointerY <= coordinateY || pointerY == -2)
-		{
-			isGameOver = true;
-			return;
-		}
-	}
-	else if (pointerY == coordinateY || pointerY == -2)
-	{
-		if (pointerX <= coordinateX || pointerX == -2)
-		{
-			isGameOver = true;
-			return;
-		}
-	}
+	
 
-	isEaten();
+	
 }
 
 int main()
@@ -137,8 +141,11 @@ int main()
 	while (!isGameOver)
 	{
 		draw();
+		isDead();
+		isEaten();	
 		Sleep(30);
 		input();
 	}
+	cout<< "Your point(s): " << nails -1 << endl;
 	system("pause");
 }
