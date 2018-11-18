@@ -67,10 +67,9 @@ void genFoodY()
 {
 	foodY = rand() % coordinateY;
 }
-
+int x =0;
 void draw()
 {
-	int x =0;
      if (x ==0){
          genFoodX();
 	 genFoodY();
