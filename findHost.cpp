@@ -81,17 +81,17 @@ void draw()
 	else if (UP) pointerY--;
 	else if (DOWN) pointerY++;
 
-	if (pointerX == coordinateX || pointerX == 0)
+	if (pointerX == coordinateX || pointerX == -2)
 	{
-		if (pointerY <= coordinateY || pointerY == 0) 
+		if (pointerY <= coordinateY || pointerY == -2) 
 		{
 			isGameOver = true;
 			return;
 		}
 	}
-	else if (pointerY == coordinateY|| pointerY ==0 )
+	else if (pointerY == coordinateY|| pointerY ==-2 )
 	{
-		if (pointerX <= coordinateX || pointerX == 0)
+		if (pointerX <= coordinateX || pointerX == -2)
 		{
 			isGameOver = true;
 			return;
