@@ -17,7 +17,7 @@ bool isGameOver;
 
 int i, j;
 
-int nails = 0;
+int nails = 1;
 
 int pointerX = coordinateX / 2;
 int pointerY = coordinateY / 2;
@@ -97,7 +97,10 @@ void draw()
 		for (j = 0; j <= coordinateX; j++)
 		{
 			if (j == 0) cout << "#";
-			else if (j == pointerX && i == pointerY) cout << "@";
+			else if (j == pointerX && i == pointerY){
+			for (int aa =0; aa<nails; aa++)
+				cout << "@";
+			}
 			else if (j == foodX && i == foodY) cout << "*";
 			else if (j == coordinateX) cout << "#";
 			else cout << " ";
