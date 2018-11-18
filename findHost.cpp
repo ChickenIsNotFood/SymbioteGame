@@ -1,10 +1,6 @@
 #include<iostream>
 #include<conio.h>
 #include<Windows.h>
-#define PRESS_UP 72
-#define PRESS_DOWN 80
-#define PRESS_LEFT 75
-#define PRESS_RIGHT 77
 
 using namespace std;
 
