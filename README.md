@@ -5,3 +5,7 @@
 ## What is this?
 
 Snake game in console (WIP)
+
+## TODO
+
+fix snake+bugs
