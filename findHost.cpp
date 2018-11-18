@@ -5,8 +5,9 @@
 #define PRESS_DOWN 80
 #define PRESS_LEFT 75
 #define PRESS_RIGHT 77
+//#define PRESS_X 
+using namespace std; //#define KEY_UP 72
 
-using namespace std; 
 const int coordinateX = 30;
 const int coordinateY = 18;
 
@@ -19,7 +20,7 @@ int i, j;
 int pointerX = coordinateX / 2;
 int pointerY = coordinateY / 2;
 
-bool LEFT = true, RIGHT = false, UP = false, DOWN = false;
+bool LEFT = false, RIGHT = false, UP = false, DOWN = false;
 
 void input()
 {
@@ -80,26 +81,27 @@ void draw()
 	else if (UP) pointerY--;
 	else if (DOWN) pointerY++;
 
-	if (pointerX == coordinateX) {
-		if (pointerY == coordinateY || pointerY == 0) {
+	if (pointerX == coordinateX || pointerX == 0)
+	{
+		if (pointerY <= coordinateY || pointerY == 0) 
+		{
 			isGameOver = true;
+			return;
 		}
 	}
-	else if (pointerY == coordinateY) {
-		if (pointerX == coordinateX || pointerX == 0)
+	else if (pointerY == coordinateY|| pointerY ==0 )
+	{
+		if (pointerX <= coordinateX || pointerX == 0)
+		{
 			isGameOver = true;
+			return;
+		}
 	}
-}
-
-void logic()
-{
-
-
-
 }
 
 int main()
 {
+
 	isGameOver = false;
 	while (!isGameOver)
 	{
