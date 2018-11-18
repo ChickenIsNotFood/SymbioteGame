@@ -88,7 +88,6 @@ void draw()
 		genFoodY();
 		x = 1;
 	}
-for (int aa; aa< nails; aa++){
 	system("cls");
 	for (i = 0; i <= coordinateX; i++) cout << "#";
 	cout << endl;
@@ -99,9 +98,7 @@ for (int aa; aa< nails; aa++){
 		{
 			if (j == 0) cout << "#";		
 			else if (j == pointerX && i == pointerY){
-				
- 				 cout << "@";					
-				
+					cout << "@";
 			}
 			else if (j == foodX && i == foodY) cout << "*";
 			else if (j == coordinateX) cout << "#";
@@ -117,7 +114,7 @@ for (int aa; aa< nails; aa++){
 	else if (RIGHT) pointerX++;
 	else if (UP) pointerY--;
 	else if (DOWN) pointerY++;
-    } 
+    
 	if (pointerX == coordinateX || pointerX == -2)
 	{
 		if (pointerY <= coordinateY || pointerY == -2)
