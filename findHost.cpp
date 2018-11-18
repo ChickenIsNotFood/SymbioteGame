@@ -154,7 +154,13 @@ fin.close();
 else
 {
 cout << "File not found\n";
+cout<< "Creating new file..."<<endl;
+ofstream outfile ("highscore.txt");
+outfile << "0" << endl;
+outfile.close();
+getHighscore();
 }
+
 return stoi(str);
 }
 
