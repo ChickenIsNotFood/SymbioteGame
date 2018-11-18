@@ -1,3 +1,7 @@
 # SymbioteGame
 
-## Only compatible with Windows atm 
+### Only compatible with Windows atm 
+
+## What is this?
+
+Snake game in console (WIP)
