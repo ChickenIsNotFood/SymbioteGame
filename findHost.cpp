@@ -1,6 +1,7 @@
 #include<iostream>
 #include<conio.h>
 #include<Windows.h>
+#include "fstream.h"
 
 using namespace std;
 
@@ -135,6 +136,26 @@ void draw()
 	
 }
 
+int  getHighScore(){
+ifstream fin ("highscore.txt");
+string str;
+
+if (fin.is_open())
+{
+while (!fin.eof())
+{
+getline(fin, str);
+  str+=str;
+}
+fin.close();
+}
+else
+{
+cout << "File not found\n";
+}
+return stoi(str);
+}
+
 int main()
 {
 	isGameOver = false;
@@ -147,5 +168,12 @@ int main()
 		input();
 	}
 	cout<< "Your point(s): " << nails -1 << endl;
+	if (nails-1 > getHighScore()){
+	ofstream ft("highscore.txt");
+        ft << nails-1
+         << endl;
+        ft.close();
+	}
+       cout << getHighScore() <<endl;	
 	system("pause");
 }
