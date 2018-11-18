@@ -22,6 +22,19 @@ int pointerY = coordinateY / 2;
 
 bool LEFT = false, RIGHT = false, UP = false, DOWN = false;
 
+int foodx;
+int foody;
+
+int GenFoodx(){
+	foodx = 
+   return foodx;
+}
+
+int GenFoody(){
+	foody = 
+ return foody;
+}
+
 void input()
 {
 	if (GetAsyncKeyState(VK_LEFT))
