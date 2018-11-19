@@ -1,14 +1,13 @@
 #include<iostream>
 #include<conio.h>
 #include<Windows.h>
-#include <fstream.h>
-#include <time.h>
+#include<fstream>
+#include<time.h>
+#include<string>
 using namespace std;
 
 const int coordinateX = 30;
 const int coordinateY = 18;
-
-int score;
 
 bool isGameOver;
 
@@ -26,21 +25,21 @@ bool LEFT = false, RIGHT = false, UP = false, DOWN = false;
 
 void input()
 {
-	if (GetAsyncKeyState(VK_LEFT))
+	if (GetAsyncKeyState(VK_LEFT) && !RIGHT)
 	{
 		LEFT = true;
 		RIGHT = false;
 		UP = false;
 		DOWN = false;
 	}
-	else if (GetAsyncKeyState(VK_RIGHT))
+	else if (GetAsyncKeyState(VK_RIGHT) && !LEFT)
 	{
 		RIGHT = true;
 		LEFT = false;
 		UP = false;
 		DOWN = false;
 	}
-	else if (GetAsyncKeyState(VK_UP))
+	else if (GetAsyncKeyState(VK_UP) && !DOWN)
 	{
 		UP = true;
 		RIGHT = false;
@@ -48,7 +47,7 @@ void input()
 		DOWN = false;
 	}
 
-	else if (GetAsyncKeyState(VK_DOWN))
+	else if (GetAsyncKeyState(VK_DOWN) && !UP)
 	{
 		DOWN = true;
 		RIGHT = false;
@@ -59,13 +58,13 @@ void input()
 
 void genFoodX()
 {
-	 srand (time(NULL));	
+	srand(time(NULL));
 	foodX = rand() % coordinateX;
 }
 
 void genFoodY()
 {
-	srand (time(NULL));	
+	srand(time(NULL));
 	foodY = rand() % coordinateY;
 }
 
@@ -80,13 +79,13 @@ void isEaten()
 	}
 }
 
-void isDead(){
-if (pointerX == coordinateX || pointerX == -2)
+void isDead() {
+	if (pointerX == coordinateX || pointerX == -2)
 	{
 		if (pointerY <= coordinateY || pointerY == -2)
 		{
 			isGameOver = true;
-			
+
 		}
 	}
 	else if (pointerY == coordinateY || pointerY == -2)
@@ -94,9 +93,40 @@ if (pointerX == coordinateX || pointerX == -2)
 		if (pointerX <= coordinateX || pointerX == -2)
 		{
 			isGameOver = true;
-		
+
 		}
 	}
+}
+
+unsigned int getHighScore() {
+	ifstream fin("highscore.txt");
+	string str = "";
+
+	if (fin.is_open())
+	{
+		while (!fin.eof())
+		{
+			getline(fin, str);
+			str = str;
+		}
+		fin.close();
+	}
+	else
+	{
+		cout << "File not found\n";
+		cout << "Creating new file..." << endl;
+		ofstream outfile("highscore.txt");
+		outfile << "0";
+		outfile.close();
+	}
+	unsigned int c=0;
+	try {
+		 c = stoi(str);
+	}
+	catch (exception& e) {
+	}
+
+	return c;
 }
 
 void draw()
@@ -107,6 +137,7 @@ void draw()
 		x = 1;
 	}
 	system("cls");
+
 	for (i = 0; i <= coordinateX; i++) cout << "#";
 	cout << endl;
 
@@ -114,9 +145,9 @@ void draw()
 	{
 		for (j = 0; j <= coordinateX; j++)
 		{
-			if (j == 0) cout << "#";		
-			else if (j == pointerX && i == pointerY){
-					cout << "@";
+			if (j == 0) cout << "#";
+			else if (j == pointerX && i == pointerY) {
+				cout << "@";
 			}
 			else if (j == foodX && i == foodY) cout << "*";
 			else if (j == coordinateX) cout << "#";
@@ -127,41 +158,12 @@ void draw()
 
 	for (i = 0; i <= coordinateX; i++) cout << "#";
 	cout << endl;
-	cout << "Score: " << score << endl;
+	cout << "your score: " << nails - 1 << " High score: " << getHighScore() << endl;
 	if (LEFT) pointerX--;
 	else if (RIGHT) pointerX++;
 	else if (UP) pointerY--;
 	else if (DOWN) pointerY++;
-    
-	
 
-	
-}
-
-int  getHighScore(){
-ifstream fin ("highscore.txt");
-string str;
-
-if (fin.is_open())
-{
-while (!fin.eof())
-{
-getline(fin, str);
-  str+=str;
-}
-fin.close();
-}
-else
-{
-cout << "File not found\n";
-cout<< "Creating new file..."<<endl;
-ofstream outfile ("highscore.txt");
-outfile << "0" << endl;
-outfile.close();
-getHighscore();
-}
-
-return stoi(str);
 }
 
 int main()
@@ -171,17 +173,17 @@ int main()
 	{
 		draw();
 		isDead();
-		isEaten();	
+		isEaten();
 		Sleep(30);
 		input();
 	}
-	cout<< "Your point(s): " << nails -1 << endl;
-	if (nails-1 > getHighScore()){
-	ofstream ft("highscore.txt");
-        ft << nails-1
-         << endl;
-        ft.close();
+	cout << "Your point(s): " << nails - 1 << endl;
+	if (nails - 1 > getHighScore()) {
+		cout << "Congrats, you beat the highscore!!!";
+		ofstream ft("highscore.txt");
+		ft << nails - 1;
+		ft.close();
 	}
-       cout << getHighScore() <<endl;	
+	cout << getHighScore() << endl;
 	system("pause");
 }
