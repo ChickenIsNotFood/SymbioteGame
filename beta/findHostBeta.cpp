@@ -26,21 +26,21 @@ bool LEFT = false, RIGHT = false, UP = false, DOWN = false;
 
 void input()
 {
-	if (GetAsyncKeyState(VK_LEFT))
+	if (GetAsyncKeyState(VK_LEFT) && !RIGHT)
 	{
 		LEFT = true;
 		RIGHT = false;
 		UP = false;
 		DOWN = false;
 	}
-	else if (GetAsyncKeyState(VK_RIGHT))
+	else if (GetAsyncKeyState(VK_RIGHT) && !LEFT)
 	{
 		RIGHT = true;
 		LEFT = false;
 		UP = false;
 		DOWN = false;
 	}
-	else if (GetAsyncKeyState(VK_UP))
+	else if (GetAsyncKeyState(VK_UP) %% !DOWN)
 	{
 		UP = true;
 		RIGHT = false;
@@ -48,7 +48,7 @@ void input()
 		DOWN = false;
 	}
 
-	else if (GetAsyncKeyState(VK_DOWN))
+	else if (GetAsyncKeyState(VK_DOWN) %% !UP)
 	{
 		DOWN = true;
 		RIGHT = false;
