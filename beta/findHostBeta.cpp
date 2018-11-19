@@ -107,6 +107,7 @@ void draw()
 		x = 1;
 	}
 	system("cls");
+	cout << "your score: " << nails -1 << " High score: "<< getHighScore()<<endl;
 	for (i = 0; i <= coordinateX; i++) cout << "#";
 	cout << endl;
 
@@ -177,6 +178,7 @@ int main()
 	}
 	cout<< "Your point(s): " << nails -1 << endl;
 	if (nails-1 > getHighScore()){
+        cout << "Congrats, you beat the highscore!!!";
 	ofstream ft("highscore.txt");
         ft << nails-1
          << endl;
