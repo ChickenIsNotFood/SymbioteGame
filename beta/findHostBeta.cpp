@@ -38,7 +38,7 @@ void input()
 		UP = false;
 		DOWN = false;
 	}
-	else if (GetAsyncKeyState(VK_UP) %% !DOWN)
+	else if (GetAsyncKeyState(VK_UP) && !DOWN)
 	{
 		UP = true;
 		RIGHT = false;
@@ -46,7 +46,7 @@ void input()
 		DOWN = false;
 	}
 
-	else if (GetAsyncKeyState(VK_DOWN) %% !UP)
+	else if (GetAsyncKeyState(VK_DOWN) && !UP)
 	{
 		DOWN = true;
 		RIGHT = false;
@@ -155,9 +155,9 @@ else
 cout << "File not found\n";
 cout<< "Creating new file..."<<endl;
 ofstream outfile ("highscore.txt");
-outfile << "0" << endl;
+outfile << "0";
 outfile.close();
-getHighscore();
+getHighScore();
 }
 
 return stoi(str);
