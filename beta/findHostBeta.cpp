@@ -98,7 +98,7 @@ void isDead() {
 	}
 }
 
-int getHighScore() {
+unsigned int getHighScore() {
 	ifstream fin("highscore.txt");
 	string str = "";
 
@@ -107,7 +107,7 @@ int getHighScore() {
 		while (!fin.eof())
 		{
 			getline(fin, str);
-			str += str;
+			str = str;
 		}
 		fin.close();
 	}
