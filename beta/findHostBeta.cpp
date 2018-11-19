@@ -178,8 +178,7 @@ int main()
 	if (nails-1 > getHighScore()){
         cout << "Congrats, you beat the highscore!!!";
 	ofstream ft("highscore.txt");
-        ft << nails-1
-         << endl;
+        ft <<nails-1;
         ft.close();
 	}
        cout << getHighScore() <<endl;	
