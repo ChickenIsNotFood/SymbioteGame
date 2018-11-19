@@ -139,7 +139,7 @@ void draw()
 
 int  getHighScore(){
 ifstream fin ("highscore.txt");
-string str;
+string str ="";
 
 if (fin.is_open())
 {
