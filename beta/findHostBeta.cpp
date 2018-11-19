@@ -96,7 +96,31 @@ if (pointerX == coordinateX || pointerX == -2)
 		}
 	}
 }
+int  getHighScore(){
+ifstream fin ("highscore.txt");
+string str ="";
 
+if (fin.is_open())
+{
+while (!fin.eof())
+{
+getline(fin, str);
+  str+=str;
+}
+fin.close();
+}
+else
+{
+cout << "File not found\n";
+cout<< "Creating new file..."<<endl;
+ofstream outfile ("highscore.txt");
+outfile << "0";
+outfile.close();
+getHighScore();
+}
+
+return stoi(str);
+}
 void draw()
 {
 	if (x == 0) {
@@ -137,31 +161,6 @@ void draw()
 	
 }
 
-int  getHighScore(){
-ifstream fin ("highscore.txt");
-string str ="";
-
-if (fin.is_open())
-{
-while (!fin.eof())
-{
-getline(fin, str);
-  str+=str;
-}
-fin.close();
-}
-else
-{
-cout << "File not found\n";
-cout<< "Creating new file..."<<endl;
-ofstream outfile ("highscore.txt");
-outfile << "0";
-outfile.close();
-getHighScore();
-}
-
-return stoi(str);
-}
 
 int main()
 {
