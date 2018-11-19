@@ -8,8 +8,6 @@ using namespace std;
 const int coordinateX = 30;
 const int coordinateY = 18;
 
-int score;
-
 bool isGameOver;
 
 int i, j;
@@ -107,7 +105,7 @@ void draw()
 		x = 1;
 	}
 	system("cls");
-	cout << "your score: " << nails -1 << " High score: "<< getHighScore()<<endl;
+	
 	for (i = 0; i <= coordinateX; i++) cout << "#";
 	cout << endl;
 
@@ -128,7 +126,7 @@ void draw()
 
 	for (i = 0; i <= coordinateX; i++) cout << "#";
 	cout << endl;
-	cout << "Score: " << score << endl;
+	cout << "your score: " << nails -1 << " High score: "<< getHighScore()<<endl;
 	if (LEFT) pointerX--;
 	else if (RIGHT) pointerX++;
 	else if (UP) pointerY--;
