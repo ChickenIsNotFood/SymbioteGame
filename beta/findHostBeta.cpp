@@ -1,3 +1,7 @@
+// ConsoleApplication1.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include "pch.h"
 #include<iostream>
 #include<conio.h>
 #include<Windows.h>
@@ -65,13 +69,13 @@ void input()
 void genFoodX()
 {
 	srand(time(NULL));
-	foodX = rand() % coordinateX;
+	foodX = rand() % coordinateX + 1;
 }
 
 void genFoodY()
 {
 	srand(time(NULL));
-	foodY = rand() % coordinateY;
+	foodY = rand() % coordinateY +1;
 }
 
 int x = 0;
@@ -86,17 +90,17 @@ void isEaten()
 }
 
 void isDead() {
-	if (pointerX == coordinateX || pointerX == -2)
+	if (pointerX == coordinateX || pointerX <= 0)
 	{
-		if (pointerY <= coordinateY || pointerY == -2)
+		if (pointerY <= coordinateY || pointerY <= -2)
 		{
 			isGameOver = true;
 
 		}
 	}
-	else if (pointerY == coordinateY || pointerY == -2)
+	else if (pointerY == coordinateY || pointerY <= -2)
 	{
-		if (pointerX <= coordinateX || pointerX == -2)
+		if (pointerX <= coordinateX || pointerX <= 0)
 		{
 			isGameOver = true;
 
@@ -130,7 +134,7 @@ unsigned int getHighScore() {
 		c = stoi(str);
 	}
 	catch (exception& e) {
-
+		cout << "Cannot covert int to string\n";
 	}
 
 	return c;
@@ -170,6 +174,7 @@ void draw()
 		}
 		cout << endl;
 	}
+	SetConsoleTextAttribute(hConsole, 2);
 
 	for (i = 0; i <= coordinateX; i++) cout << "#";
 	cout << endl;
@@ -184,7 +189,7 @@ void draw()
 void doingit() {
 	isGameOver = false;
 	poop_snake();
-
+	nails = 1;
 	while (!isGameOver)
 	{
 		draw();
@@ -201,17 +206,17 @@ void doingit() {
 		ft.close();
 	}
 	char c = 'n';
-	cout << getHighScore() << endl;
+	cout <<"Highscore: "<< getHighScore() << endl;
 	cout << "Do you want to continue?(y/n): ";
 	cin >> c;
-	if (c == 'y' || c=='Y') {
+	if (c == 'y' || c == 'Y') {
 		doingit();
 	}
-		system("pause");
+
 }
 
 int main()
 {
 	doingit();
-	
+	system("pause");
 }
