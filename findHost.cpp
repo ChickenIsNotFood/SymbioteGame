@@ -14,7 +14,6 @@ bool isGameOver;
 int i, j;
 
 int nails = 1;
-
 int pointerX = coordinateX / 2;
 int pointerY = coordinateY / 2;
 
@@ -22,7 +21,14 @@ int foodX;
 int foodY;
 
 bool LEFT = false, RIGHT = false, UP = false, DOWN = false;
-
+void poop_snake() {
+	LEFT = false;
+	RIGHT = false;
+	UP = false;
+	DOWN = false;
+	pointerX = coordinateX / 2;
+	pointerY = coordinateY / 2;
+}
 void input()
 {
 	if (GetAsyncKeyState(VK_LEFT) && !RIGHT)
@@ -59,13 +65,13 @@ void input()
 void genFoodX()
 {
 	srand(time(NULL));
-	foodX = rand() % coordinateX;
+	foodX = rand() % coordinateX + 1;
 }
 
 void genFoodY()
 {
 	srand(time(NULL));
-	foodY = rand() % coordinateY;
+	foodY = rand() % coordinateY +1;
 }
 
 int x = 0;
@@ -80,17 +86,17 @@ void isEaten()
 }
 
 void isDead() {
-	if (pointerX == coordinateX || pointerX == -2)
+	if (pointerX == coordinateX || pointerX <= 0)
 	{
-		if (pointerY <= coordinateY || pointerY == -2)
+		if (pointerY <= coordinateY || pointerY <= -2)
 		{
 			isGameOver = true;
 
 		}
 	}
-	else if (pointerY == coordinateY || pointerY == -2)
+	else if (pointerY == coordinateY || pointerY <= -2)
 	{
-		if (pointerX <= coordinateX || pointerX == -2)
+		if (pointerX <= coordinateX || pointerX <= 0)
 		{
 			isGameOver = true;
 
@@ -119,11 +125,12 @@ unsigned int getHighScore() {
 		outfile << "0";
 		outfile.close();
 	}
-	unsigned int c=0;
+	unsigned int c = 0;
 	try {
-		 c = stoi(str);
+		c = stoi(str);
 	}
 	catch (exception& e) {
+		cout << "Cannot covert int to string\n";
 	}
 
 	return c;
@@ -137,7 +144,8 @@ void draw()
 		x = 1;
 	}
 	system("cls");
-
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 2);
 	for (i = 0; i <= coordinateX; i++) cout << "#";
 	cout << endl;
 
@@ -145,19 +153,28 @@ void draw()
 	{
 		for (j = 0; j <= coordinateX; j++)
 		{
-			if (j == 0) cout << "#";
+			if (j == 0) {
+				SetConsoleTextAttribute(hConsole, 2);
+				cout << "#";
+			}
 			else if (j == pointerX && i == pointerY) {
+				SetConsoleTextAttribute(hConsole, 12);
 				cout << "@";
 			}
-			else if (j == foodX && i == foodY) cout << "*";
+			else if (j == foodX && i == foodY) {
+				SetConsoleTextAttribute(hConsole, 13);
+				cout << "*";
+			}
 			else if (j == coordinateX) cout << "#";
 			else cout << " ";
 		}
 		cout << endl;
 	}
+	SetConsoleTextAttribute(hConsole, 2);
 
 	for (i = 0; i <= coordinateX; i++) cout << "#";
 	cout << endl;
+	SetConsoleTextAttribute(hConsole, 15);
 	cout << "your score: " << nails - 1 << " High score: " << getHighScore() << endl;
 	if (LEFT) pointerX--;
 	else if (RIGHT) pointerX++;
@@ -165,10 +182,10 @@ void draw()
 	else if (DOWN) pointerY++;
 
 }
-
-int main()
-{
+void doingit() {
 	isGameOver = false;
+	poop_snake();
+	nails = 1;
 	while (!isGameOver)
 	{
 		draw();
@@ -184,6 +201,18 @@ int main()
 		ft << nails - 1;
 		ft.close();
 	}
-	cout << getHighScore() << endl;
+	char c = 'n';
+	cout <<"Highscore: "<< getHighScore() << endl;
+	cout << "Do you want to continue?(y/n): ";
+	cin >> c;
+	if (c == 'y' || c == 'Y') {
+		doingit();
+	}
+
+}
+
+int main()
+{
+	doingit();
 	system("pause");
 }
