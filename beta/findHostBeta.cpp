@@ -33,17 +33,45 @@ void poop_snake() {
 	pointerX[0]=coordinateX / 2;
 	pointerY[0]=coordinateY / 2;
 }
+bool movu = false;
+bool movd = false;
+bool movl = false;
+bool movr = false;
 void input()
 {
 	if (GetAsyncKeyState(VK_LEFT) && !RIGHT)
 	{
 		LEFT = true;
+		if (UP) { 
+			movu = true; 
+			movd = false;
+			movl = false;
+			movr = false;
+		}
+		else if (DOWN) {
+			movd = true;
+			movu = false;
+			movl = false;
+			movr = false;
+		}
 		RIGHT = false;
 		UP = false;
 		DOWN = false;
 	}
 	else if (GetAsyncKeyState(VK_RIGHT) && !LEFT)
 	{
+		if (UP) {
+			movu = true;
+			movd = false;
+			movl = false;
+			movr = false;
+		}
+		else if (DOWN) {
+			movd = true;
+			movu = false;
+			movl = false;
+			movr = false;
+		}
 		RIGHT = true;
 		LEFT = false;
 		UP = false;
@@ -51,6 +79,18 @@ void input()
 	}
 	else if (GetAsyncKeyState(VK_UP) && !DOWN)
 	{
+		if (LEFT) {
+			movu = false;
+			movd = false;
+			movl = true;
+			movr = false;
+		}
+		else if (RIGHT) {
+			movd = false;
+			movu = false;
+			movl = false;
+			movr = true;
+		}
 		UP = true;
 		RIGHT = false;
 		LEFT = false;
@@ -59,6 +99,18 @@ void input()
 
 	else if (GetAsyncKeyState(VK_DOWN) && !UP)
 	{
+		if (LEFT) {
+			movu = false;
+			movd = false;
+			movl = true;
+			movr = false;
+		}
+		else if (RIGHT) {
+			movd = false;
+			movu = false;
+			movl = false;
+			movr = true;
+		}
 		DOWN = true;
 		RIGHT = false;
 		LEFT = false;
@@ -69,32 +121,30 @@ void input()
 void genFoodX()
 {
 	srand(time(NULL));
-	foodX = rand() % coordinateX + 1;
+	foodX = rand() % (coordinateX-1) + 1;
 }
 
 void genFoodY()
 {
 	srand(time(NULL));
-	foodY = rand() % coordinateY +1;
+	foodY = rand() % (coordinateY-1) +1;
 }
 
 int x = 0;
 
 void isEaten()
 {
-	if (pointerX[0] == foodX && pointerY[0] == foodY)
+	if (pointerX[0] == foodX+1 && pointerY[0] == foodY)
 	{
 
 		nails++;
-		/*pointerX[nails-1] = foodX;
-		pointerY[nails-1] = foodY;*/
 	
 		x = 0;
 	}
 }
 
 void isDead() {
-	if (pointerX[0] == coordinateX || pointerX[0] <= 0)
+	if (pointerX[0] == coordinateX+1 || pointerX[0] <= 0)
 	{
 		if (pointerY[0] <= coordinateY || pointerY[0] <= -2)
 		{
@@ -104,7 +154,7 @@ void isDead() {
 	}
 	else if (pointerY[0] == coordinateY || pointerY[0] <= -2)
 	{
-		if (pointerX[0] <= coordinateX || pointerX[0] <= 0)
+		if (pointerX[0] <= coordinateX+1 || pointerX[0] <= 0)
 		{
 			isGameOver = true;
 
@@ -165,7 +215,7 @@ void draw()
 			for (int an = 0; an < nails; an++)
 			if (j == pointerX[an] && i == pointerY[an]) {
 				SetConsoleTextAttribute(hConsole, 12);
-				cout << "@";
+				cout << "\b@";
 				SetConsoleTextAttribute(hConsole, 2);
 				
 			}
@@ -195,91 +245,127 @@ void draw()
 	SetConsoleTextAttribute(hConsole, 15);
 	cout << "your score: " << nails - 1 << " High score: " << getHighScore() << endl;
 	if (LEFT) {
+		int checkY = pointerY[0];
+		int checkX = pointerX[0];
 		pointerX[0]--;
-		/*
-		if (UP) {
-			for (int i =2; i<nails; i++)
-				pointerY[nails-1]--;
-		}
-		else if (DOWN) {
-			for (int i = 2; i < nails; i++)
-			pointerY[nails-1]++;
-		}
-		for (int i = 2; i < nails; i++)
-		if (pointerY[nails-1] == pointerY[nails-2]) {
-			pointerY[nails-1] = pointerY[nails-2];
-			pointerX[nails-1] = pointerX[nails-2] +1 ;
-		}*/
+
 		for (int bob =1; bob < nails; bob++) {
-		
-			pointerX[bob] = pointerX[bob - 1] +1;
-			pointerY[bob] = pointerY[bob - 1];
+			if (bob == 1) {
+				pointerX[bob] = pointerX[bob - 1] + 1;
+				pointerY[bob] = pointerY[bob - 1];
+			}
+			
+			else if(movu) {
+				if (pointerY[bob] != checkY) {
+					pointerX[bob] = pointerX[bob - 1];
+					pointerY[bob]--;
+				}
+				if (pointerY[bob] == checkY) {
+					pointerX[bob] = pointerX[bob - 1] + 1;
+				}
+			}
+			else if (movd){
+				if (pointerY[bob] != checkY) {
+					pointerX[bob] = pointerX[bob - 1];
+					pointerY[bob]++;
+				}
+				if (pointerY[bob] == checkY) {
+					pointerX[bob] = pointerX[bob - 1] + 1;
+				}
+			}
 		}
+	
 	}
 	else if (RIGHT) {
+		int checkY = pointerY[0];
+		int checkX = pointerX[0];
 		pointerX[0]++;
-		
-		/*if (UP) {
-			for (int i = 2; i < nails; i++)
-			pointerY[nails-1]--;
-		}
-		else if (DOWN) {
-			for (int i = 2; i < nails; i++)
-			pointerY[nails-1]++;
-		}
-		for (int i = 2; i < nails; i++)
-		if (pointerY[nails-1] == pointerY[nails-2] ) {
-			pointerY[nails-1] = pointerY[nails-2];
-			pointerX[nails-1] = pointerX[nails-2] - 1;
-		}*/
 
 		for (int bob = 1; bob < nails; bob++) {
-			pointerX[bob] = pointerX[bob - 1] - 1;
-			pointerY[bob] = pointerY[bob - 1];
+			if (bob == 1) {
+				pointerX[bob] = pointerX[bob - 1] - 1;
+				pointerY[bob] = pointerY[bob - 1];
+			}
+			else if (movu) {
+				if (pointerY[bob] != checkY) {
+					pointerX[bob] = pointerX[bob - 1];
+					pointerY[bob]--;
+				}
+				if (pointerY[bob] == checkY) {
+					pointerX[bob] = pointerX[bob - 1] - 1;
+				}
+			}
+			else if (movd) {
+				if (pointerY[bob] != checkY) {
+					pointerX[bob] = pointerX[bob - 1];
+					pointerY[bob]++;
+				}
+				if (pointerY[bob] == checkY) {
+					pointerX[bob] = pointerX[bob - 1] - 1;
+				}
+			}
 			
 		}
 		
 	}
 	else if (UP) {
+		int checkY = pointerY[0];
+		int checkX = pointerX[0];
 		pointerY[0]--;
-/*
-		if (LEFT) {
-			for (int i = 2; i < nails; i++)
-			pointerX[nails-1]--;
-		}
-		else if (RIGHT) {
-			for (int i = 2; i < nails; i++)
-			pointerX[nails-1]++;
-		}
-		for (int i = 2; i < nails; i++)
-		if (pointerX[nails-1] == pointerX[nails-2]) {
-			pointerY[nails-1] = pointerY[nails-2] +1 ;
-			pointerX[nails-1] = pointerX[nails-2];
-		}*/
+
 		for (int bob = 1; bob < nails; bob++) {
-			pointerY[bob] = pointerY[bob - 1] + 1;
-			pointerX[bob] = pointerX[bob - 1];
+			if (bob == 1) {
+				pointerY[bob] = pointerY[bob - 1] + 1;
+				pointerX[bob] = pointerX[bob - 1];
+			}
+			else if (movr) {
+				if (pointerX[bob] != checkX) {
+					pointerY[bob] = pointerY[bob - 1];
+					pointerX[bob]++;
+				}
+				if (pointerX[bob] == checkX) {
+					pointerY[bob] = pointerY[bob - 1] + 1;
+				}
+			}
+			else if (movl) {
+				if (pointerX[bob] != checkX) {
+					pointerY[bob] = pointerY[bob - 1];
+					pointerX[bob]--;
+				}
+				if (pointerX[bob] == checkX) {
+					pointerY[bob] = pointerY[bob - 1] + 1;
+				}
+			}
 		}
 	}
 	else if (DOWN) {
+	int checkY = pointerY[0];
+	int checkX = pointerX[0];
 		pointerY[0]++;
-		/*
-		if (LEFT) {
-			for (int i = 2; i < nails; i++)
-			pointerX[nails-1]--;
-		}
-		else if (RIGHT ) {
-			for (int i = 2; i < nails; i++)
-			pointerX[nails-1]++;
-		}
-		for (int i = 2; i < nails; i++)
-		if ((pointerX[nails-1] == pointerX[nails-2])) {
-			pointerY[nails-1] = pointerY[nails-2] - 1;
-			pointerX[nails-1] = pointerX[nails-2];
-		}*/
+
 		for (int bob = 1; bob < nails; bob++) {
-			pointerY[bob] = pointerY[bob - 1] - 1;
-			pointerX[bob] = pointerX[bob - 1];
+			if (bob == 1) {
+				pointerY[bob] = pointerY[bob - 1] - 1;
+				pointerX[bob] = pointerX[bob - 1];
+			}
+			else if (movr) {
+				if (pointerX[bob] != checkX) {
+					pointerY[bob] = pointerY[bob - 1];
+					pointerX[bob]++;
+				}
+				if (pointerX[bob] == checkX) {
+					pointerY[bob] = pointerY[bob - 1] - 1;
+				}
+			}
+			else if (movl) {
+				if (pointerX[bob] != checkX) {
+					pointerY[bob] = pointerY[bob - 1];
+					pointerX[bob]--;
+				}
+				if (pointerX[bob] == checkX) {
+					pointerY[bob] = pointerY[bob - 1] - 1;
+				}
+			}
 		}
 	}
 
