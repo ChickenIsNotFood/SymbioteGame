@@ -6,6 +6,8 @@
 
 Snake game in console (WIP)
 
+### visual studio project is [here](https://github.com/ChickenIsNotFood/visualstudio_projects)
+
 ## TODO
 
 fix snake+bugs
